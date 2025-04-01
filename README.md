@@ -46,8 +46,9 @@ This project leverages the following technologies:
 - **Binance API**: Fetches real-time market data from Binance for backtesting and trading simulation.
 - **Requests**: Handles HTTP requests to fetch data from the Binance API.
 
-# Install dependicies mentioned in requirent.txt
-# Fetch data in csv using data_fetcher.py
+
+**Install dependicies mentioned in requirent.txt
+**Fetch data in csv using data_fetcher.py
 
 
  
