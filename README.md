@@ -1,76 +1,48 @@
-# EMA Strategy with 1:30 Risk-Reward Ratio
-Overview
-This project implements a trading strategy based on two Exponential Moving Averages (EMA): EMA 7 and EMA 25, using a 1:30 risk-reward ratio. The strategy is designed to capture sharp reversal moves in a high-volatility market by trading based on the relationship between short-term and long-term trends.
+EMA 7 & 25 Strategy with 1:30 Risk:Reward
+This repository contains the implementation of a momentum-based trading strategy using the Exponential Moving Averages (EMA) 7 and EMA 25. The strategy is designed to trade in the direction of sharp price reversals by analyzing short-term price action on a 1-minute timeframe with a confirmation trend derived from the 15-minute timeframe.
 
-The strategy utilizes a combination of:
-* EMA 7 (short-term trend)
-* EMA 25 (long-term trend)
-
-When the 15-minute candle closes at a specific time (e.g., 3:00), it decides the trade direction for the next 15 minutes, based on the relative positions of these two EMAs. The strategy enters buy positions in a bullish trend and sell positions in a bearish trend. A very tight stop loss is used to capture sharp moves with minimal risk.
-
-The code is implemented with Python and includes backtesting logic for the strategy. Additionally, historical data can be fetched using the Binance API and used for backtesting.
-
+Strategy Overview:
+* Trade Direction: The strategy checks the trend on the 15-minute timeframe at every 3:00 PM candle close:
+  *If EMA 7 crosses EMA 25 upwards, the trend is considered bullish, and long trades are considered.
+  *If EMA 25 is above EMA 7, the trend is bearish, and short trades are considered.
+*Timeframe:
+ *15-minute timeframe is used to determine the overall market trend.
+ *1-minute timeframe is used for executing trades based on the price action and EMA crossovers.
+*Risk Management:
+ *A tight stop-loss is used, set near the previous candle's low or high, depending on the direction of the trade.
+ *The risk-reward ratio is set to 1:30. For every unit of risk, the expected reward is 30 times that amount.
 Key Features:
-* EMA Strategy: Utilizes the relationship between EMA 7 and EMA 25 for trend direction determination.
-* 1:30 Risk-Reward Ratio: The strategy targets a risk-reward ratio of 1:30, optimizing the risk management process.
-* Backtesting: Backtests the strategy using historical market data (CSV format), calculating the win rate and tracking capital over time.
-* Data Fetching: Fetches real-time market data from Binance API, saving it in CSV format for use in backtesting.
+*Risk Per Trade: 0.1% of capital.
+*Risk-Reward Ratio: 1:30.
+*Trade Logic:
+ *Enter long (buy) trades when EMA 7 is above EMA 25 on the 1-minute chart, and the 15-minute trend is bullish.
+ *Enter short (sell) trades when EMA 7 is below EMA 25 on the 1-minute chart, and the 15-minute trend is bearish.
 
-Strategy Logic
-Trend Identification:
-* When EMA 25 is below EMA 7 on the 15-minute chart, the market is considered bearish, and only sell positions are considered.
-* When EMA 25 is above EMA 7, the market is considered bullish, and only buy positions are considered.
+Backtest and Performance:
+*Initial Capital: $10,000
+*Risk Per Trade: $10 (0.1% of capital)
+*Expected Return: 30 times risk per trade
+*Win Rate: Calculated based on the number of profitable trades vs. total trades executed.
 
-Signal Generation:
-* The strategy waits for a confirmation of the trend from the 15-minute chart. The position is then entered in the direction of the prevailing trend on the 1-minute chart.
-  
-Position Management:
+Tech Stack
+*Python Libraries:
+ *Pandas for data handling.
+ *NumPy for numerical operations.
+ *Requests to fetch data from Binance API.
+ *TA-Lib for technical indicators like RSI, EMA.
+ *Matplotlib for plotting the equity curve.
 
-* A tight stop loss is placed at the breaking candle's midpoint or calculated at 0.33 times the height of the breaking candle, depending on the strategy choice.
+*Data Source:
+ *Binance API is used to fetch real-time market data (BTCUSDT).
 
-The target is set based on a 1:30 risk-reward ratio.
+How It Works ->
+1. Fetch Data: The 1-minute and 15-minute data for BTCUSDT are fetched from Binance.
+2. Compute EMAs: The script calculates the 7-period EMA and 25-period EMA for both 1-minute and 15-minute data.
+3. Trend Detection: The trend on the 15-minute timeframe determines the direction of trades on the 1-minute timeframe.
+4. Signal Generation:
+*If the 15-minute trend is bullish, the strategy looks for buy signals on the 1-minute timeframe.
+*If the 15-minute trend is bearish, the strategy looks for sell signals on the 1-minute timeframe.
+5. Trade Execution: When a signal is generated, the strategy calculates the entry price, stop loss, and take profit based on the risk-reward ratio of 1:30.
+6. Backtesting: The strategy is backtested on historical data to evaluate its performance, win rate, and profitability.
 
-Objective:
-
-Capture sharp reversal moves in high-volatility conditions and avoid choppy or ranging markets.
-
-Tech Stack-
-This project leverages the following technologies:
-
-* Python: Main programming language for backtesting and implementing the strategy.
-* pandas: Used for handling and processing market data (CSV, DataFrame operations).
-* NumPy: Used for numerical operations and calculations.
-* Matplotlib: Used to plot the equity curve for visualizing the performance over time.
-* TA-Lib: A technical analysis library used for calculating indicators like RSI (Relative Strength Index).
-* Binance API: Fetches real-time market data from Binance for backtesting and trading simulation.
-* Requests: Handles HTTP requests to fetch data from the Binance API.
-
-You can fetch market data from the Binance API using the data_fetcher.py script. This will save the data to a CSV file.
-
-
-
-
-File Structure:
-
-ema-strategy/
-│
-├── data_fetcher.py         # Code to fetch market data from Binance API
-├── ema_strategy.py         # Code to implement and backtest the EMA strategy
-├── requirements.txt        # List of required Python packages
-├── README.md               # Project overview and instructions
-└── data/                   # Folder to store CSV files (market data)
-
-Example Output:
-After running the backtest, you'll see results like:
-{
-    "Total Trades": 100,
-    "Wins": 70,
-    "Losses": 30,
-    "Win Rate": 70.0,
-    "Capital + Return": 1261660
-}
-
-Contribution:
-* Feel free to fork this repository, make improvements, and submit pull requests. If you find any issues or have suggestions for better strategies, feel free to open an issue in the repository.
-
-This README.md provides a clear explanation of the strategy, its features, and the technologies used. It also gives users an understanding of how to use the code, along with a section about contributing to the project.
+Feel free to open issues or submit pull requests if you'd like to improve the strategy or fix bugs. Contributions are welcome!   
