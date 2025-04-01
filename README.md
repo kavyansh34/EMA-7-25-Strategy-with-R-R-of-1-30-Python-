@@ -47,8 +47,12 @@ This project leverages the following technologies:
 - **Requests**: Handles HTTP requests to fetch data from the Binance API.
 
 
-Install dependicies mentioned in requirent.txt
-Fetch data in csv using data_fetcher.py
+## Install dependicies mentioned in requirements.txt
+- **requirements.csv** states all the libraries needed.
+
+## Fetch data in csv using data_fetcher.py
+- **Data fetching** can be quite overwhelming as a beginner with desired duration and timeframes.
+- Set paramters as needed and get your csv loaded on your local machine.
 
 
  
