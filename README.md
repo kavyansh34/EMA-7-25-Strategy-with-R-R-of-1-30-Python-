@@ -26,5 +26,4 @@ Backtesting Results :
 * The strategy was backtested over 1 year of historical data.
 * Despite a lower win rate, the Risk-Reward Ratio of 1:30 delivers significant profits.
 
-Contributing
 Feel free to open issues or submit pull requests for any improvements or optimizations!
