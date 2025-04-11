@@ -43,7 +43,7 @@ def plot_graph(capital_history):
 def calculate_ema(df, period, column="close"):
     return df[column].ewm(span=period, adjust=False).mean()
 
-def backtest_ema_strategy(df_1m, df_15m, ema_short=7, ema_long=25, risk_reward=45):
+def backtest_ema_strategy(df_1m, df_15m, ema_short=7, ema_long=25, risk_reward=30):
     global capital, riskpt            
 
     # Compute EMAs for both timeframes
